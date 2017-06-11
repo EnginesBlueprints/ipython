@@ -27,7 +27,8 @@
         "label": "BSD 3 Clause",
         "url": "http://opensource.org/licenses/BSD-3-Clause"
       }
-    }
+    },
+    "timestamp": "2017-06-11 23:55:03 UTC"
   },
   "software": {
     "base": {
@@ -44,11 +45,11 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "if ! test -f /home/app/.have_profile\r\n then\r\n    ipython profile create nbserver\r\n    touch /home/app/.have_profile\r\ncd /home/app\r\n ipython profile create nbserver\r\n\r\npass=`echo \"from IPython.lib import passwd\r\npasswd('_Engines_Environment(notebook_password)')\r\nexit() \" | ipython  --no-confirm-exit --no-color-info --no-pprint --colors=NoColor |grep sha1 `\r\n\r\n\r\ncat ~/.ipython/profile_nbserver/ipython_notebook_config.py | sed \"/^# c.NotebookApp.password.*/s//c.NotebookApp.password=$pass/\" > /tmp/confg\r\ncp /tmp/confg ~/.ipython/profile_nbserver/ipython_notebook_config.py\r\nfi\r\n\r\nPID_FILE=/tmp/ipython_notebook.pid\r\nexport PID_FILE\r\n. /home/trap.sh\r\nhost=`hostname`\r\nip=`grep $Hostname /etc/hosts |cut -f1 `\r\nipython notebook   --ip=$ip --NotebookApp.password=$pass --config ~/.ipython/profile_nbserver/ipython_notebook_config.py &\r\n\r\npid=$!\r\necho $pid >$PID_FILE\r\ntouch /engines/var/run/flags/startup_complete\r\nwait\r\nrm /engines/var/run/flags/startup_complete\r\n"
+        "content": "if ! test -f /home/app/.have_profile\r\n then\r\n    /home/app/.local/bin/ipython2 profile create nbserver\r\n    touch /home/app/.have_profile\r\ncd /home/app\r\n /home/app/.local/bin/ipython2 profile create nbserver\r\n\r\npass=`echo \"from IPython.lib import passwd\r\npasswd('_Engines_Environment(notebook_password)')\r\nexit() \" | /home/app/.local/bin/ipython2  --no-confirm-exit --no-color-info --no-pprint --colors=NoColor |grep sha1 `\r\n\r\n\r\ncat ~/.ipython/profile_nbserver/ipython_notebook_config.py | sed \"/^# c.NotebookApp.password.*/s//c.NotebookApp.password=$pass/\" > /tmp/confg\r\ncp /tmp/confg ~/.ipython/profile_nbserver/ipython_notebook_config.py\r\nfi\r\n\r\nPID_FILE=/tmp/ipython_notebook.pid\r\nexport PID_FILE\r\n. /home/trap.sh\r\nhost=`hostname`\r\nip=`grep $Hostname /etc/hosts |cut -f1 `\r\n/home/app/.local/bin/jupyter-notebook   --ip=$ip --NotebookApp.password=$pass --config ~/.ipython/profile_nbserver/ipython_notebook_config.py &\r\n\r\npid=$!\r\necho $pid >$PID_FILE\r\ntouch /engines/var/run/flags/startup_complete\r\nwait\r\nrm /engines/var/run/flags/startup_complete\r\n"
       },
       "install": {
         "language": "sh",
-        "content": "#wget https://bootstrap.pypa.io/get-pip.py get-pip.py \r\n#python get-pip.py\r\npip install -U jsonschema\r\npip install \"ipython[notebook]\"\r\n"
+        "content": "#wget https://bootstrap.pypa.io/get-pip.py get-pip.py \r\n#python get-pip.py\r\npip install -U jsonschema --user\r\npip install \"ipython[notebook]\" --user\r\n"
       },
       "post_install": {
         "language": "sh"
@@ -98,6 +99,16 @@
     ],
     "database_seed": {
       "language": "text"
-    }
+    },
+    "actionators": [
+      {
+        "name": "show_token",
+        "return_type": "plain_text",
+        "script": {
+          "language": "sh",
+          "content": "#!/bin/bash\r\ncat /home/app/.local/share/jupyter/runtime/notebook_cookie_secret"
+        }
+      }
+    ]
   }
 }
