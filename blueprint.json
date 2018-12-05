@@ -18,7 +18,7 @@
     },
     "software": {
       "display": {
-        "title": "ipython notebook",
+        "title": "ipython2 notebook",
         "label": "ipythonnotebook",
         "description": "IPython provides a rich architecture for interactive computing with",
         "url": "http://ipython.org/"
@@ -28,7 +28,7 @@
         "url": "http://opensource.org/licenses/BSD-3-Clause"
       }
     },
-    "timestamp": "2018-12-05T12:31:34+11:00"
+    "timestamp": "2018-12-05T13:45:52+11:00"
   },
   "software": {
     "base": {
