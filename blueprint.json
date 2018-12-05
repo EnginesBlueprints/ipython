@@ -28,7 +28,7 @@
         "url": "http://opensource.org/licenses/BSD-3-Clause"
       }
     },
-    "timestamp": "2018-12-05T11:42:18+11:00"
+    "timestamp": "2018-12-05T12:08:24+11:00"
   },
   "software": {
     "base": {
@@ -46,7 +46,7 @@
     "scripts": {
       "start": {
         "language": "sh",
-        "content": "#!/bin/sh\r\n\r\nif ! test -f /home/app/.have_profile\r\n then\r\n    /home/app/.local/bin/ipython2 profile create nbserver\r\n    touch /home/app/.have_profile\r\ncd /home/app\r\n\r\n/home/app/.local/bin/ipython2 profile create nbserver\r\n\r\npass=`echo \"from IPython.lib import passwd\r\npasswd('_Engines_Environment(notebook_password)')\r\nexit() \" | /home/app/.local/bin/ipython2  --no-confirm-exit --no-color-info --no-pprint --colors=NoColor |grep sha1 | sed \"/.*sha/s//\\'sha/\"`\r\n\r\n\r\ncat ~/.ipython/profile_nbserver/ipython_notebook_config.py | sed \"/^# c.NotebookApp.password.*/s//c.NotebookApp.password=$pass/\" > /tmp/confg\r\ncp /tmp/confg ~/.ipython/profile_nbserver/ipython_notebook_config.py\r\nfi\r\n\r\nPID_FILE=/tmp/ipython_notebook.pid\r\nexport PID_FILE\r\n. /home/engines/functions/system_functions.sh\r\nhost=`hostname`\r\nip=`grep $Hostname /etc/hosts |cut -f1 `\r\nresult=`/home/app/.local/bin/jupyter-notebook   --ip=$ip --NotebookApp.password=$pass --config ~/.ipython/profile_nbserver/ipython_notebook_config.py &`\r\npid=$!\r\n\r\necho $result\r\n\r\necho $result |grep token= > /tmp/first_run_url\r\n\r\necho $pid >$PID_FILE\r\nstartup_complete\r\nwait\r\nshutdown_complete\r\nsleep 500\r\nexit\r\n"
+        "content": "#!/bin/sh\r\nsleep 500\r\nif ! test -f /home/app/.have_profile\r\n then\r\n    /home/app/.local/bin/ipython2 profile create nbserver\r\n    touch /home/app/.have_profile\r\ncd /home/app\r\n\r\n/home/app/.local/bin/ipython2 profile create nbserver\r\n\r\npass=`echo \"from IPython.lib import passwd\r\npasswd('_Engines_Environment(notebook_password)')\r\nexit() \" | /home/app/.local/bin/ipython2  --no-confirm-exit --no-color-info --no-pprint --colors=NoColor |grep sha1 | sed \"/.*sha/s//\\'sha/\"`\r\n\r\n\r\ncat ~/.ipython/profile_nbserver/ipython_notebook_config.py | sed \"/^# c.NotebookApp.password.*/s//c.NotebookApp.password=$pass/\" > /tmp/confg\r\ncp /tmp/confg ~/.ipython/profile_nbserver/ipython_notebook_config.py\r\nfi\r\n\r\nPID_FILE=/tmp/ipython_notebook.pid\r\nexport PID_FILE\r\n. /home/engines/functions/system_functions.sh\r\nhost=`hostname`\r\nip=`grep $Hostname /etc/hosts |cut -f1 `\r\nresult=`/home/app/.local/bin/jupyter-notebook   --ip=$ip --NotebookApp.password=$pass --config ~/.ipython/profile_nbserver/ipython_notebook_config.py &`\r\npid=$!\r\n\r\necho $result\r\n\r\necho $result |grep token= > /tmp/first_run_url\r\n\r\necho $pid >$PID_FILE\r\nstartup_complete\r\nwait\r\nshutdown_complete\r\nsleep 500\r\nexit\r\n"
       },
       "install": {
         "language": "sh",
