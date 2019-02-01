@@ -28,7 +28,7 @@
         "url": "http://opensource.org/licenses/BSD-3-Clause"
       }
     },
-    "timestamp": "2018-12-05T14:00:12+11:00"
+    "timestamp": "2019-02-01T16:12:55+11:00"
   },
   "software": {
     "base": {
@@ -79,15 +79,6 @@
     ],
     "environment_variables": [
       {
-        "name": "notebook_password",
-        "mandatory": true,
-        "ask_at_build_time": true,
-        "input": {
-          "type": "string",
-          "label": "Notebook Password"
-        }
-      },
-      {
         "name": "HOME",
         "value": "/home/app",
         "immutable": true
@@ -95,6 +86,13 @@
       {
         "name": "Engines_Debug_Run",
         "value": "true"
+      },
+      {
+        "name": "notebook_password ",
+        "mandatory": true,
+        "input": {
+          "type": "password_with_confirmation"
+        }
       }
     ],
     "database_seed": {
@@ -106,7 +104,7 @@
         "return_type": "plain_text",
         "script": {
           "language": "sh",
-          "content": "#!/bin/bash\r\ncat /home/app/.local/share/jupyter/runtime/notebook_cookie_secret"
+          "content": "#!/bin/sh\r\ncat /home/app/.local/share/jupyter/runtime/notebook_cookie_secret"
         }
       }
     ]
