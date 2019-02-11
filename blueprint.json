@@ -28,7 +28,7 @@
         "url": "http://opensource.org/licenses/BSD-3-Clause"
       }
     },
-    "timestamp": "2019-02-11T15:46:28+11:00"
+    "timestamp": "2019-02-11T15:50:50+11:00"
   },
   "software": {
     "base": {
@@ -81,7 +81,10 @@
       {
         "name": "HOME",
         "value": "/home/app",
-        "immutable": true
+        "immutable": true,
+        "input": {
+          "type": "hidden"
+        }
       },
       {
         "name": "Engines_Debug_Run",
